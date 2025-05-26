@@ -10,8 +10,11 @@ namespace ProgPOEPart2
 {
     class Program
     {
+        private static Dictionary<string, string> userMemory = new Dictionary<string, string>(); // Memory to store user information
         private static Random rand = new Random();
         private static string lastTip = string.Empty;
+        private static int conversationCount = 0; // Counter to track the number of interactions
+
         static void Main(string[] args)
         {
             string audioFilePath = "C:\\Users\\siyan\\source\\repos\\ProgPOEPart2\\ProgPOEPart2\\bin\\Debug\\Project name (en) v2.wav";
@@ -37,6 +40,10 @@ namespace ProgPOEPart2
                 }
 
                 string userName = Name();
+                userMemory["name"] = userName;
+                // Ask for the user's favorite cybersecurity topic
+                string favoriteTopic = AskForFavoriteTopic();
+                userMemory["favoriteTopic"] = favoriteTopic;
                 TypingEffect($"Welcome, {userName}! How can I assist you today?");
 
                 while (true)
@@ -56,11 +63,31 @@ namespace ProgPOEPart2
             }
         }
 
-        // Method to respond to user queries
+        static string AskForFavoriteTopic()
+        {
+            Console.WriteLine("What is your favorite cybersecurity topic? (e.g., password safety, phishing, privacy, scam)");
+            string topic = Console.ReadLine().Trim();
+            return topic; // Return the user's favorite topic
+        }
+
         static string RespondToQuery(string query)
         {
             query = query.ToLower();
             List<string> responses = new List<string>(); // List to collect responses
+
+            // Sentiment detection
+            if (query.Contains("worried"))
+            {
+                responses.Add("It's completely understandable to feel that way. Let me share some tips to help you stay safe.");
+            }
+            if (query.Contains("curious"))
+            {
+                responses.Add("That's great! Curiosity is key to learning more about cybersecurity.");
+            }
+            if (query.Contains("frustrated"))
+            {
+                responses.Add("I understand that cybersecurity can be overwhelming. I'm here to help!");
+            }
 
             // Check for keywords and add corresponding responses
             if (query.Contains("password"))
@@ -118,6 +145,33 @@ namespace ProgPOEPart2
             if (query.Contains("thank you") || query.Contains("thanks"))
             {
                 responses.Add("You're welcome! If you have more questions, feel free to ask.");
+            }
+
+            // Randomly surface the favorite topic response after a certain number of interactions
+            if (userMemory.ContainsKey("favoriteTopic") && conversationCount <= 1) // number of interactions
+            {
+                string favoriteTopic = userMemory["favoriteTopic"].ToLower();
+                if (rand.Next(0, 4) == 0)
+                {
+                    switch (favoriteTopic)
+                    {
+                        case "password safety":
+                            responses.Add("As someone interested in password safety, remember to use a mix of letters, numbers, and special characters in your passwords.");
+                            break;
+                        case "phishing":
+                            responses.Add("As someone interested in phishing, be cautious of emails asking for personal information and always verify the sender's email address.");
+                            break;
+                        case "privacy":
+                            responses.Add("As someone interested in privacy, regularly update your privacy settings on social media platforms to protect your information.");
+                            break;
+                        case "scam":
+                            responses.Add("As someone interested in scams, always verify the legitimacy of a request before responding.");
+                            break;
+                        default:
+                            responses.Add($"As someone interested in {favoriteTopic}, it's important to stay informed about the latest trends and best practices.");
+                            break;
+                    }
+                }
             }
 
             // If no responses were added, return a default message
@@ -303,6 +357,7 @@ namespace ProgPOEPart2
             return newTip;
         }
 
+        // Method to get the user's name with validation
         static string Name()
         {
             string name;
