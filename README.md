@@ -34,3 +34,5 @@ The Cybersecurity Chatbot is a console application built in C# that provides use
 "What can I ask you about?"
 questions related to password safety, phishing, safe browsing and others
 - Type "exit" to end the conversation.
+- Ask follow up questions
+- Ask about multiple different topics and once
