@@ -10,6 +10,8 @@ namespace ProgPOEPart2
 {
     class Program
     {
+        private static Random rand = new Random();
+        private static string lastTip = string.Empty;
         static void Main(string[] args)
         {
             string audioFilePath = "C:\\Users\\siyan\\source\\repos\\ProgPOEPart2\\ProgPOEPart2\\bin\\Debug\\Project name (en) v2.wav";
@@ -58,38 +60,247 @@ namespace ProgPOEPart2
         static string RespondToQuery(string query)
         {
             query = query.ToLower();
-            if (query.Contains("password")) // Check for specific keywords in the query and return appropriate responses
+            List<string> responses = new List<string>(); // List to collect responses
+
+            // Check for keywords and add corresponding responses
+            if (query.Contains("password"))
             {
-                return "Enhancing Password Safety: Key Recommendations\r\nCreate Strong and Complex Passwords\r\nUse a combination of uppercase and lowercase letters, numbers, and special characters. Avoid common words, simple sequences, or easily guessable patterns to reduce vulnerability to guessing and brute-force attacks.\r\n\r\nMake Passwords Long\r\nAim for passwords that are at least 12 characters in length. Longer passwords exponentially increase the difficulty for attackers attempting to crack them.\r\n\r\nUse Unique Passwords for Every Account\r\nNever reuse passwords across multiple sites. Unique passwords ensure that if one account is compromised, others remain secure.\r\n\r\nLeverage Password Managers\r\nUtilize reputable password managers to generate, store, and autofill complex passwords securely. This eliminates the need to remember multiple strong passwords and reduces the temptation to reuse them.\r\n\r\nEnable Multi-Factor Authentication (MFA)\r\nAdd an extra layer of protection by requiring a second form of verification (such as a text message code, authentication app, or biometric factor) in addition to your password.\r\n\r\nRegularly Update Passwords\r\nChange your passwords periodically, especially if you suspect any account may have been compromised or after a data breach notification.\r\n\r\nStay Vigilant Against Phishing Attempts\r\nAlways verify the legitimacy of emails, messages, and websites before entering your password. Phishing attacks often mimic trusted sources to steal credentials.\r\n\r\nKeep Your Software and Devices Updated\r\nRegularly update your operating system, browsers, and security software to protect against malware and keyloggers that can capture your passwords.\r\n\r\n";
+                responses.Add(GetRandomPasswordTip());
             }
-            else if (query.Contains("cybersecurity"))
+            if (query.Contains("scam"))
             {
-                return "What is Cybersecurity?\r\nCybersecurity refers to the practice of protecting computers, servers, networks, devices, and data from unauthorized access, attacks, damage, or theft. It encompasses a wide range of technologies, processes, and measures designed to safeguard digital information and ensure the confidentiality, integrity, and availability of data.\r\n\r\nAs our reliance on digital systems grows—whether for personal use, business operations, or critical infrastructure—cybersecurity has become essential to defend against cyber threats such as hacking, malware, ransomware, phishing, and other forms of cybercrime.";
+                responses.Add(GetRandomScamTip());
             }
-            else if (query.Contains("phishing"))
+            if (query.Contains("privacy"))
             {
-                return "Be Wary of Phishing Attempts\r\nPhishing is a common cyberattack technique where attackers impersonate legitimate organizations or contacts to trick you into revealing sensitive information, such as your passwords. These attacks often come in the form of emails, text messages, phone calls, or fake websites that look authentic.\r\n\r\nHow Phishing Works:\r\n\r\nYou might receive an email that appears to be from your bank, a popular online service, or even a colleague.\r\nThe message often creates a sense of urgency, asking you to “verify your account,” “reset your password,” or “confirm personal details.”\r\nThe email contains a link to a fraudulent website designed to look like the real one, where you are prompted to enter your password or other private information.\r\nOnce entered, attackers capture your credentials and can use them to access your accounts.\r\nHow to Protect Yourself from Phishing:\r\n\r\nVerify the Sender: Check the sender’s email address carefully. Phishing emails often use addresses that look similar but have subtle differences.\r\nLook for Red Flags: Poor grammar, spelling mistakes, generic greetings (like “Dear Customer”), and unexpected attachments or links are common signs of phishing.\r\nDon’t Click Suspicious Links: Instead of clicking links in emails, manually type the website’s URL into your browser or use a trusted bookmark.\r\nCheck Website Security: Ensure the website uses HTTPS (look for the padlock icon in the address bar) before entering any credentials.\r\nUse Anti-Phishing Tools: Many browsers and email services offer built-in phishing detection and warnings—keep these enabled.\r\nBe Skeptical of Urgency: Phishing messages often pressure you to act quickly. Take your time to verify the request through official channels.\r\nEducate Yourself and Others: Awareness is key. Regularly update yourself on common phishing tactics and share this knowledge with friends, family, or colleagues.\r\nBy staying vigilant and cautious, you can greatly reduce the risk of falling victim to phishing attacks and keep your passwords and personal information safe.";
+                responses.Add(GetRandomPrivacyTip());
             }
-            else if (query.Contains("safe browsing"))
+            if (query.Contains("phishing"))
             {
-                return "Tips for Safe Browsing\r\nUse Secure Websites (HTTPS):\r\nAlways check that the website URL begins with “https://” and displays a padlock icon. This indicates the site uses encryption to protect data transmitted between your browser and the website.\r\n\r\nKeep Your Browser Updated:\r\nRegularly update your web browser to the latest version. Updates often include security patches that protect against newly discovered vulnerabilities.\r\n\r\nEnable Browser Security Features:\r\nUse built-in security features like pop-up blockers, phishing filters, and “Do Not Track” settings to reduce exposure to malicious content.\r\n\r\nAvoid Clicking on Suspicious Links:\r\nBe cautious about clicking links in emails, social media, or unfamiliar websites. Hover over links to preview the URL before clicking.\r\n\r\nUse Strong, Unique Passwords:\r\nWhen creating accounts, use strong passwords and avoid reusing them across sites. Consider using a password manager to keep track of them securely.\r\n\r\nBe Careful with Public Wi-Fi:\r\nAvoid accessing sensitive accounts or conducting financial transactions over unsecured public Wi-Fi networks. If necessary, use a trusted Virtual Private Network (VPN) to encrypt your connection.\r\n\r\nLimit Personal Information Sharing:\r\nAvoid sharing sensitive personal information on websites unless absolutely necessary and ensure the site is trustworthy.\r\n\r\nBeware of Downloads and Extensions:\r\nOnly download files, software, or browser extensions from reputable sources. Malicious downloads can infect your device with malware.\r\n\r\nClear Browsing Data Regularly:\r\nPeriodically clear your cache, cookies, and browsing history to protect your privacy and reduce tracking.\r\n\r\nUse Antivirus and Anti-Malware Software:\r\nKeep security software active and updated to detect and block threats encountered while browsing.";
+                responses.Add(GetRandomPhishingTip());
             }
-            else if (query.Contains("how are you"))
+            if (query.Contains("malware"))
             {
-                return "I'm just a program, but I'm here to help you with cybersecurity!";
+                responses.Add(GetRandomMalwareTip());
             }
-            else if (query.Contains("what is your purpose"))
+            if (query.Contains("two-factor authentication") || query.Contains("2fa"))
             {
-                return "My purpose is to assist you with questions about cybersecurity.";
+                responses.Add(GetRandom2FATip());
             }
-            else if (query.Contains("what can i ask you about"))
+            if (query.Contains("safe browsing"))
             {
-                return "You can ask me about password safety, phishing, and safe browsing.";
+                responses.Add(GetRandomSafeBrowsingTip());
             }
-            else
+            if (query.Contains("social engineering"))
+            {
+                responses.Add(GetRandomSocialEngineeringTip());
+            }
+            if (query.Contains("data breach"))
+            {
+                responses.Add(GetRandomDataBreachTip());
+            }
+            if (query.Contains("cybersecurity best practices"))
+            {
+                responses.Add(GetRandomCybersecurityBestPracticesTip());
+            }
+            if (query.Contains("how are you"))
+            {
+                responses.Add("I'm just a program, but I'm here to help you with cybersecurity!");
+            }
+            if (query.Contains("what is your purpose"))
+            {
+                responses.Add("My purpose is to assist you with questions about cybersecurity.");
+            }
+            if (query.Contains("what can i ask you about"))
+            {
+                responses.Add("You can ask me about password safety, phishing, and safe browsing.");
+            }
+            if (query.Contains("thank you") || query.Contains("thanks"))
+            {
+                responses.Add("You're welcome! If you have more questions, feel free to ask.");
+            }
+
+            // If no responses were added, return a default message
+            if (responses.Count == 0)
             {
                 return "I didn't quite understand that. Could you rephrase?";
             }
+
+            // Combine all responses into a single string
+            return string.Join("\n", responses);
+        }
+
+        // Method to get a random tip based users input
+        static string GetRandomPhishingTip()
+        {
+            List<string> phishing = new List<string>
+            {
+        "Be cautious of emails asking for personal information. Scammers often disguise themselves as trusted organizations.",
+        "Always verify the sender's email address. Phishing emails often use addresses that look similar but have subtle differences.",
+        "Don't click on suspicious links. Instead, manually type the website's URL into your browser.",
+        "Look for spelling and grammatical errors in emails. Legitimate organizations usually proofread their communications.",
+        "Be wary of urgent requests for information. Scammers often create a sense of urgency to trick you into acting quickly.",
+        "Check the URL of the website before entering any personal information. Ensure it matches the official site.",
+        "Use security software that can help detect phishing attempts and alert you to potential threats.",
+        "Educate yourself about common phishing tactics to recognize them when they occur."
+            };
+            return GetRandomTip(phishing);
+        }
+
+        static string GetRandomPasswordTip()
+        {
+            List<string> password = new List<string>
+            {
+        "Use a mix of letters, numbers, and special characters in your passwords.",
+        "Avoid using the same password across multiple sites.",
+        "Consider using a password manager to keep track of your passwords securely.",
+        "Make sure to use strong, unique passwords for each account. Avoid using personal details in your passwords.",
+        "Change your passwords regularly, especially if you suspect any account may have been compromised.",
+        "Enable multi-factor authentication (MFA) wherever possible for an extra layer of security.",
+        "Avoid using easily guessable passwords, such as '123456' or 'password'.",
+        "Create passphrases by combining random words for stronger security."
+            };
+            return GetRandomTip(password);
+        }
+
+        static string GetRandomScamTip()
+        {
+            List<string> scam = new List<string>
+            {
+        "Never share your personal information with unknown sources.",
+        "Be wary of unsolicited emails or messages that ask for sensitive information.",
+        "Always verify the legitimacy of a request before responding.",
+        "Be cautious of scams. Always verify the source before providing any personal information.",
+        "If an offer seems too good to be true, it probably is. Trust your instincts.",
+        "Research the company or individual making the request to ensure they are legitimate.",
+        "Do not provide personal information over the phone unless you initiated the call.",
+        "Report any suspicious emails or messages to your email provider or local authorities."
+            };
+            return GetRandomTip(scam);
+        }
+
+        static string GetRandomPrivacyTip()
+        {
+            List<string> privacy = new List<string>
+            {
+        "Regularly update your privacy settings on social media platforms.",
+        "Be mindful of the information you share online, even in private messages.",
+        "Use two-factor authentication to enhance your account security.",
+        "It's crucial to protect your privacy online. Regularly review your privacy settings on social media.",
+        "Limit the amount of personal information you share publicly on social media.",
+        "Be cautious about friend requests from unknown individuals.",
+        "Review the permissions of apps connected to your social media accounts and remove any that are unnecessary.",
+        "Consider using a VPN when accessing public Wi-Fi to protect your data."
+            };
+            return GetRandomTip(privacy);
+        }
+
+        static string GetRandomMalwareTip()
+        {
+            List<string> malwareTips = new List<string>
+            {
+        "Keep your antivirus software updated to protect against malware.",
+        "Be cautious when downloading files or clicking on links from unknown sources.",
+        "Regularly scan your computer for malware to ensure it's clean.",
+        "Avoid using pirated software, as it often contains malware.",
+        "Use a firewall to help protect your network from unauthorized access.",
+        "Be wary of email attachments, especially from unknown senders.",
+        "Educate yourself about the latest malware threats and how to avoid them.",
+        "Consider using a dedicated malware removal tool for added protection."
+            };
+            return GetRandomTip(malwareTips);
+        }
+
+        static string GetRandom2FATip()
+        {
+            List<string> twoFATips = new List<string>
+            {
+        "Enable two-factor authentication (2FA) on your accounts for added security.",
+        "Use an authenticator app for generating 2FA codes instead of SMS for better security.",
+        "Always back up your 2FA recovery codes in a secure location.",
+        "Be aware that 2FA is not foolproof; always combine it with strong passwords.",
+        "Consider using biometric authentication (like fingerprint or facial recognition) as a second factor.",
+        "Regularly review your 2FA settings and update them as necessary.",
+        "Be cautious of phishing attempts that target your 2FA codes.",
+        "Use 2FA on all accounts that support it, especially email and financial accounts."
+            };
+            return GetRandomTip(twoFATips);
+        }
+
+        static string GetRandomSafeBrowsingTip()
+        {
+            List<string> safeBrowsingTips = new List<string>
+            {
+        "Always check the URL for 'https://' before entering sensitive information.",
+        "Use a reputable browser that offers security features and updates regularly.",
+        "Avoid clicking on pop-up ads or suspicious links while browsing.",
+        "Consider using browser extensions that enhance security and privacy.",
+        "Clear your browser cache and cookies regularly to protect your privacy.",
+        "Use a VPN when accessing public Wi-Fi to encrypt your internet connection.",
+        "Be cautious about sharing personal information on social media.",
+        "Disable location services in your browser to prevent tracking."
+            };
+            return GetRandomTip(safeBrowsingTips);
+        }
+
+        static string GetRandomSocialEngineeringTip()
+        {
+            List<string> socialEngineeringTips = new List<string>
+            {
+        "Be cautious of unsolicited requests for personal information.",
+        "Verify the identity of anyone asking for sensitive information, especially over the phone.",
+        "Educate yourself about common social engineering tactics to recognize them.",
+        "Always think twice before sharing information, even with trusted contacts.",
+        "Be aware of the tactics used in pretexting, baiting, and tailgating.",
+        "Never disclose sensitive information in response to unexpected requests.",
+        "Use secure methods to share sensitive information, such as encrypted messaging.",
+        "Stay informed about the latest social engineering scams and tactics."
+            };
+            return GetRandomTip(socialEngineeringTips);
+        }
+
+        static string GetRandomDataBreachTip()
+        {
+            List<string> dataBreachTips = new List<string>
+            {
+        "Regularly monitor your accounts for unauthorized activity.",
+        "Use unique passwords for each account to minimize risk in case of a breach.",
+        "Consider using a service that alerts you to data breaches involving your information.",
+        "If you suspect a breach, change your passwords immediately and enable 2FA.",
+        "Review your credit report regularly for any unusual activity.",
+        "Consider placing a fraud alert on your credit report if you suspect a breach.",
+        "Be cautious of phishing emails that may follow a data breach notification.",
+        "Educate yourself on how to respond to a data breach effectively."
+            };
+            return GetRandomTip(dataBreachTips);
+        }
+
+        static string GetRandomCybersecurityBestPracticesTip()
+        {
+            List<string> bestPracticesTips = new List<string>
+            {
+        "Regularly update your software and operating systems to patch vulnerabilities.",
+        "Educate yourself and others about cybersecurity risks and safe practices.",
+        "Back up your data regularly to prevent loss in case of an attack.",
+        "Use strong, unique passwords and consider a password manager.",
+        "Implement a security policy for your home network and devices.",
+        "Be cautious about the permissions you grant to apps and services.",
+        "Regularly review and update your security settings on all accounts.",
+        "Stay informed about the latest cybersecurity trends and threats."
+            };
+            return GetRandomTip(bestPracticesTips);
+        }
+
+        // Helper method to get a random tip from a list
+        static string GetRandomTip(List<string> tips)
+        {
+            string newTip;
+            do
+            {
+                newTip = tips[rand.Next(tips.Count)];
+            } while (newTip == lastTip); // Ensure it's not the same as the last tip
+            lastTip = newTip;
+            return newTip;
         }
 
         static string Name()
