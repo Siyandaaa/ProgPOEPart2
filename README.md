@@ -10,6 +10,11 @@ The Cybersecurity Chatbot is a console application built in C# that provides use
 - Input validation for user queries
 - Enhanced console UI with colored text and centered output
 - Typing effect for a conversational feel
+- Randomized responses
+- Free flow conversation
+- Sentiment detection
+- Memory and recall
+- Wider range of topics to ask
 
 ## Prerequisites
 - .NET SDK (version 5.0 or later)
@@ -22,10 +27,10 @@ The Cybersecurity Chatbot is a console application built in C# that provides use
 - Run the Application Start the application by pressing F5 or by using the command line
 
 ## Usage
-When prompted, enter your name to personalize the interaction.
-You can ask the chatbot questions related to cybersecurity, such as:
+- When prompted, enter your name to personalize the interaction.
+- You can ask the chatbot questions related to cybersecurity, such as:
 "How are you?"
 "What's your purpose?"
 "What can I ask you about?"
-questions related to password safety, phishing and safe browsing
-Type "exit" to end the conversation.
+questions related to password safety, phishing, safe browsing and others
+- Type "exit" to end the conversation.
